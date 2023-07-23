@@ -6,7 +6,10 @@ Le rôle ansible qui permet d'installer MedShakeEHR
 Requirements
 ------------
 
-Aucun
+- role: geerlingguy.php-versions
+- role: geerlingguy.php
+- role: geerlingguy.mysql
+- role: geerlingguy.apache
 
 Role Variables
 --------------

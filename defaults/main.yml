@@ -22,7 +22,6 @@ php_post_max_size: "32M"
 php_date_timezone: "{{ timezone}}"
 mysql_user_home: /home/vagrant
 mysql_user_name: vagrant
-# /!\ REPLACE THIS WITH YOUR OWN PASSWORD
 mysql_user_password: root
 mysql_python_package_debian: python3-mysqldb
 mysql_databases:
@@ -33,25 +32,17 @@ mysql_databases:
 mysql_users:
   - name: medshakeehr
     host: localhost
-    # /!\ REPLACE THIS WITH YOUR OWN PASSWORD
     password: secret
     priv: "medshakeehr.*:ALL"
 apache_remove_default_vhost: true
 apache_vhosts:
-  # Additional properties:
-  # 'serveradmin, serveralias, allow_override, options, extra_parameters'.
   - servername: "{{ domain }}"
     documentroot: "{{ msehrPath }}/public_html/"
 apache_vhosts_ssl:
-#  Additional properties:
-#  'serveradmin, serveralias, allow_override, options, extra_parameters'.
   - servername: "{{ domain }}"
     documentroot: "{{ msehrPath }}/public_html/"
     certificate_file: "/etc/ssl/{{ domain }}/{{ domain }}.pem"
     certificate_key_file: "/etc/ssl/{{ domain }}/{{ domain }}.key"
-#   # Optional.
-#   certificate_chain_file: "/path/to/certificate_chain.crt"
-# Only used on Debian/Ubuntu.
 apache_mods_enabled:
   - rewrite
   - headers

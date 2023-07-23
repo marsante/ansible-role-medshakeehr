@@ -10,7 +10,9 @@ galaxy_info:
         - stretch
         - buster
         - bullseye
+        - bookworm
 dependencies: 
   - role: geerlingguy.php-versions
   - role: geerlingguy.php
   - role: geerlingguy.mysql
+  - role: geerlingguy.apache
