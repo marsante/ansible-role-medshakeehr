@@ -1,0 +1,62 @@
+---
+timezone: "Europe/Paris"
+domain: msehr.local
+msehrPath: "/home/ehr"
+msehr_package: ['acl','composer','curl','ghostscript','git','grub2','imagemagick','ntp','pdftk-java','python3-openssl','wget']
+msehr_base_repo_url: "https://codeload.github.com/MedShake/MedShakeEHR-base/tar.gz/refs/tags/"
+msehr_base_release: "8.0.1"
+msehr_base_checksum: "sha256:4562a2da89a4c8aa7204582eaf7dc3c79d81ff68e2a8817a3789ddafde693eee"
+create_self_signed_cert: true
+countryName: FR
+localityName: Paris
+organizationName: Dr Strange
+emailAdress: email@domain.tld
+orthancUser: user
+orthancPswd: orthancPswd
+php_version: '8.2'
+php_packages: ['php{{ php_version }}','php{{ php_version }}-bcmath','php{{ php_version }}-curl','php{{ php_version }}-gd','php{{ php_version }}-gnupg','php{{ php_version }}-imagick','php{{ php_version }}-imap','php{{ php_version }}-intl','php{{ php_version }}-mbstring','php{{ php_version }}-mysql','php{{ php_version }}-soap','php{{ php_version }}-xml','php{{ php_version }}-yaml','php{{ php_version }}-zip']
+php_default_version_debian: "{{ php_version }}"
+php_max_input_vars: "10000"
+php_upload_max_filesize: "64M"
+php_post_max_size: "32M"
+php_date_timezone: "{{ timezone}}"
+mysql_user_home: /home/vagrant
+mysql_user_name: vagrant
+# /!\ REPLACE THIS WITH YOUR OWN PASSWORD
+mysql_user_password: root
+mysql_python_package_debian: python3-mysqldb
+mysql_databases:
+  - name: medshakeehr
+    collation: utf8_general_ci
+    encoding: utf8
+    replicate: 1
+mysql_users:
+  - name: medshakeehr
+    host: localhost
+    # /!\ REPLACE THIS WITH YOUR OWN PASSWORD
+    password: secret
+    priv: "medshakeehr.*:ALL"
+apache_remove_default_vhost: true
+apache_vhosts:
+  # Additional properties:
+  # 'serveradmin, serveralias, allow_override, options, extra_parameters'.
+  - servername: "{{ domain }}"
+    documentroot: "{{ msehrPath }}/public_html/"
+apache_vhosts_ssl:
+#  Additional properties:
+#  'serveradmin, serveralias, allow_override, options, extra_parameters'.
+  - servername: "{{ domain }}"
+    documentroot: "{{ msehrPath }}/public_html/"
+    certificate_file: "/etc/ssl/{{ domain }}/{{ domain }}.pem"
+    certificate_key_file: "/etc/ssl/{{ domain }}/{{ domain }}.key"
+#   # Optional.
+#   certificate_chain_file: "/path/to/certificate_chain.crt"
+# Only used on Debian/Ubuntu.
+apache_mods_enabled:
+  - rewrite
+  - headers
+  - ssl
+  - mpm_prefork
+  - "php{{ php_version }}"
+apache_mods_disabled:
+  - mpm_event
