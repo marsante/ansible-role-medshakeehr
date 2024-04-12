@@ -4,8 +4,8 @@ domain: msehr.local
 msehrPath: "/home/ehr"
 msehr_package: ['acl','composer','curl','ghostscript','git','grub2','imagemagick','ntp','pdftk-java','python3-openssl','wget']
 msehr_base_repo_url: "https://codeload.github.com/MedShake/MedShakeEHR-base/tar.gz/refs/tags/"
-msehr_base_release: "8.0.1"
-msehr_base_checksum: "sha256:4562a2da89a4c8aa7204582eaf7dc3c79d81ff68e2a8817a3789ddafde693eee"
+msehr_base_release: "8.1.1"
+msehr_base_checksum: "sha256:5ae9ddf3e528eab4fe5882724cc00d912600a9fb1748ff31e47c6191a173b200"
 create_self_signed_cert: true
 countryName: FR
 localityName: Paris
@@ -23,7 +23,6 @@ php_date_timezone: "{{ timezone}}"
 mysql_user_home: /home/vagrant
 mysql_user_name: vagrant
 mysql_user_password: root
-mysql_python_package_debian: python3-mysqldb
 mysql_databases:
   - name: medshakeehr
     collation: utf8_general_ci

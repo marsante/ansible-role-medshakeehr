@@ -69,8 +69,5 @@
 - name: "Install self-signed certificate"
   ansible.builtin.include_tasks: install-cert.yml
 
-- name: "Fix role apache2"
-  ansible.builtin.include_tasks: fix-role-apache.yml
-
 - name: "Hardening apache2"
   ansible.builtin.include_tasks: hardening-apache.yml
