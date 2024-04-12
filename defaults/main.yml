@@ -16,7 +16,7 @@ orthancPswd: orthancPswd
 php_version: '8.2'
 php_packages: ['php{{ php_version }}','php{{ php_version }}-bcmath','php{{ php_version }}-curl','php{{ php_version }}-gd','php{{ php_version }}-gnupg','php{{ php_version }}-imagick','php{{ php_version }}-imap','php{{ php_version }}-intl','php{{ php_version }}-mbstring','php{{ php_version }}-mysql','php{{ php_version }}-soap','php{{ php_version }}-xml','php{{ php_version }}-yaml','php{{ php_version }}-zip']
 php_default_version_debian: "{{ php_version }}"
-php_max_input_vars: "10000"
+php_max_input_vars: "20000"
 php_upload_max_filesize: "64M"
 php_post_max_size: "32M"
 php_date_timezone: "{{ timezone}}"
@@ -47,7 +47,4 @@ apache_mods_enabled:
   - rewrite
   - headers
   - ssl
-  - mpm_prefork
-  - "php{{ php_version }}"
-apache_mods_disabled:
-  - mpm_event
+  
