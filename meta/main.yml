@@ -7,8 +7,9 @@ galaxy_info:
     platforms:
     - name: Debian
       versions:
-        - stretch
-        - buster
         - bullseye
         - bookworm
+    - name: Ubuntu
+      versions:
+        - jammy
 dependencies: []
