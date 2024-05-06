@@ -1,0 +1,48 @@
+---
+- name:  check if MedShakeEHR exist
+  stat:
+    path: "{{ msehrPath }}/public_html"
+  register: msehr 
+
+- name: Get MedShakeEHR package
+  get_url:
+    url: "{{ msehr_base_repo_url }}v{{ msehr_base_release }}"
+    dest: "/tmp/msehr.tar.gz"
+    checksum: "{{ msehr_base_checksum }}"
+  when: not msehr.stat.exists
+
+- name: Extract MedShakeEHR package
+  unarchive:
+    src: "/tmp/msehr.tar.gz"
+    remote_src: yes
+    dest: "/tmp/"
+  when: not msehr.stat.exists
+
+- name: Install MedShakeEHR file
+  copy:
+    remote_src: yes
+    src: "/tmp/MedShakeEHR-base-{{ msehr_base_release }}/"
+    dest: "{{ msehrPath }}"
+    mode: "u=rwX,go=rX"
+    owner: www-data
+    group: www-data
+  when: not msehr.stat.exists 
+
+- name: Creating MEDSHAKEEHRPATH file
+  copy:
+    dest: "{{ msehrPath }}/public_html/MEDSHAKEEHRPATH"
+    content: |
+      {{ msehrPath }}
+    owner: www-data
+    group: www-data
+  when: not msehr.stat.exists 
+
+- name: Composer upgrade on /ehr
+  shell: cd "{{ msehrPath }}" && composer upgrade --no-cache   
+  become: true
+  become_user: www-data
+
+- name: Composer upgrade on /ehr/public_html
+  shell: cd "{{ msehrPath }}/public_html" && composer upgrade --no-cache   
+  become: true
+  become_user: www-data

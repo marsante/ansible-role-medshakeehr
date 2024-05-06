@@ -11,8 +11,4 @@ galaxy_info:
         - buster
         - bullseye
         - bookworm
-dependencies:
-  - role: geerlingguy.apache
-  - role: geerlingguy.php-versions
-  - role: geerlingguy.php
-  - role: geerlingguy.mysql
+dependencies: []

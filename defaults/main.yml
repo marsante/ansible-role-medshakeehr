@@ -1,49 +1,23 @@
 ---
-timezone: "Europe/Paris"
-domain: msehr.local
-msehrPath: "/home/ehr"
-msehr_package: ['acl','composer','curl','ghostscript','git','grub2','imagemagick','ntp','pdftk-java','python3-openssl','wget']
-msehr_base_repo_url: "https://codeload.github.com/MedShake/MedShakeEHR-base/tar.gz/refs/tags/"
-msehr_base_release: "8.1.1"
-msehr_base_checksum: "sha256:5ae9ddf3e528eab4fe5882724cc00d912600a9fb1748ff31e47c6191a173b200"
-create_self_signed_cert: true
+user: vagrant
 countryName: FR
 localityName: Paris
 organizationName: Dr Strange
 emailAdress: email@domain.tld
-orthancUser: user
-orthancPswd: orthancPswd
-php_version: '8.2'
-php_packages: ['php{{ php_version }}','php{{ php_version }}-bcmath','php{{ php_version }}-curl','php{{ php_version }}-gd','php{{ php_version }}-gnupg','php{{ php_version }}-imagick','php{{ php_version }}-imap','php{{ php_version }}-intl','php{{ php_version }}-mbstring','php{{ php_version }}-mysql','php{{ php_version }}-soap','php{{ php_version }}-xml','php{{ php_version }}-yaml','php{{ php_version }}-zip']
-php_default_version_debian: "{{ php_version }}"
-php_max_input_vars: "20000"
-php_upload_max_filesize: "64M"
-php_post_max_size: "32M"
-php_date_timezone: "{{ timezone}}"
-mysql_user_home: /home/vagrant
-mysql_user_name: vagrant
-mysql_user_password: root
-mysql_databases:
-  - name: medshakeehr
-    collation: utf8_general_ci
-    encoding: utf8
-    replicate: 1
-mysql_users:
-  - name: medshakeehr
-    host: localhost
-    password: secret
-    priv: "medshakeehr.*:ALL"
-apache_remove_default_vhost: true
-apache_vhosts:
-  - servername: "{{ domain }}"
-    documentroot: "{{ msehrPath }}/public_html/"
-apache_vhosts_ssl:
-  - servername: "{{ domain }}"
-    documentroot: "{{ msehrPath }}/public_html/"
-    certificate_file: "/etc/ssl/{{ domain }}/{{ domain }}.pem"
-    certificate_key_file: "/etc/ssl/{{ domain }}/{{ domain }}.key"
-apache_mods_enabled:
-  - rewrite
-  - headers
-  - ssl
-  
+sqlRootPassword: root
+sqlUserAccount: user
+sqlUserPassword: user
+sqlDbName: medshakeehr
+msehr_base_release: "8.1.1"
+msehr_base_repo_url: "https://codeload.github.com/MedShake/MedShakeEHR-base/tar.gz/refs/tags/"
+msehr_base_checksum: "sha256:5ae9ddf3e528eab4fe5882724cc00d912600a9fb1748ff31e47c6191a173b200"
+msehrPath: /opt/ehr
+timezone: Europe/Paris
+domain: msehr.local
+uploadMaxFilesize: upload_max_filesize = 20M
+postMaxsize: post_max_size = 20M
+maxInputVars: max_input_vars = 20000
+errorReporting: error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT
+displayErrors: display_errors = Off
+displayStartupErrors: display_startup_errors = Off
+msehrPackages: ['acl', 'apache2', 'composer', 'curl', 'ghostscript', 'git', 'grub2', 'imagemagick', 'mariadb-server', 'ntp', 'pdftk-java', 'php', 'php-bcmath', 'php-curl', 'php-gd', 'php-gnupg', 'php-imagick', 'php-imap', 'php-intl', 'php-json', 'php-mysql', 'php-soap', 'php-xml', 'php-yaml', 'php-zip', 'python3-mysqldb', 'python3-openssl', 'ufw', 'unattended-upgrades' ]

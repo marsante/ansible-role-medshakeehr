@@ -1,0 +1,48 @@
+---
+- name: Setup vhosts configuration.
+  template:
+    src: templates/msehr.vhost.conf.j2
+    dest: "/etc/apache2/sites-available/{{ domain }}.conf"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Enabled mod_rewrite, mod_headers and mod_ssl
+  apache2_module: 
+    state: present
+    name: "{{ item }}" 
+  with_items:
+    - headers
+    - rewrite
+    - ssl
+  notify: Restart Apache
+
+- name: deregister default vhosts
+  command: a2dissite {{item}} 
+  with_items:
+    - 000-default.conf 
+    - default-ssl.conf
+  notify: Restart Apache
+
+- name: register default vhosts
+  command: a2ensite {{item}} 
+  with_items:
+    - "{{ domain }}"
+  notify: Restart Apache
+
+- name: Set ServerTokens Prod
+  lineinfile:
+    path: /etc/apache2/conf-available/security.conf
+    regexp: '^ServerTokens OS'
+    line: ServerTokens Prod
+    state: present
+  notify: Restart Apache
+
+- name: Set ServerSignature Off
+  lineinfile:
+    path: /etc/apache2/conf-available/security.conf
+    regexp: '^ServerSignature On'
+    line: ServerSignature Off
+    state: present
+  notify: Restart Apache
+

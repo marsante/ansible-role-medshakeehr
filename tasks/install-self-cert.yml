@@ -7,14 +7,12 @@
     owner: root
     group: root
     mode: '0755'
-  when: create_self_signed_cert and  not msehr.stat.exists
 
 - name: create private key
   openssl_privatekey:
     path: "/etc/ssl/{{ domain }}/{{ domain }}.key"
     size: 4096
     state: present
-  when: create_self_signed_cert and  not msehr.stat.exists
 
 - name: Generate an OpenSSL Certificate Signing Request with Subject information
   openssl_csr:
@@ -27,7 +25,6 @@
     common_name: "{{ domain }}"
     subject_alt_name: 'DNS:"{{ domain }}"'
     state: present
-  when: create_self_signed_cert and  not msehr.stat.exists
 
 - name: Generate a Self Signed OpenSSL certificate
   openssl_certificate:
@@ -37,11 +34,3 @@
     provider: selfsigned
     selfsigned_not_after: +3650d
     state: present
-  when: create_self_signed_cert and  not msehr.stat.exists
-
-- name: Clean the Certificate Signing Request
-  file:
-    path: "/etc/ssl/{{ domain }}/{{ domain }}.csr"
-    state: absent
-  when: create_self_signed_cert and  not msehr.stat.exists
-  
