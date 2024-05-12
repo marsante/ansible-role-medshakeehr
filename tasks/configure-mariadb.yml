@@ -1,39 +1,49 @@
 ---
-- name: Set the root password 
-  mysql_user: login_user=root login_password="{{ sqlRootPassword }}" user=root password="{{ sqlRootPassword }}"
+- name: Copy root my.cnf
+  template:
+    src: templates/root-my.cnf.j2
+    dest: "/root/.my.cnf"
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart Mariadb
 
-- name: Secure the root user for IPV6 localhost (::1)
-  mysql_user: login_user=root login_password="{{ sqlRootPassword }}" user=root password="{{ sqlRootPassword }}" host="::1"
+- name: Set MariaDB root password
+  mysql_user:
+    name: root
+    password: "{{ sqlRootPassword }}"
+    state: present
+    host: localhost
 
-- name: Secure the root user for IPV4 localhost (127.0.0.1)
-  mysql_user: login_user=root login_password="{{ sqlRootPassword }}" user=root password="{{ sqlRootPassword }}" host="127.0.0.1"
+- name: Remove anonymous user
+  mysql_user:
+    name: ''
+    state: absent
 
-- name: Secure the root user for localhost domain
-  mysql_user: login_user=root login_password="{{ sqlRootPassword }}" user=root password="{{ sqlRootPassword }}" host="localhost"
-
-- name: Secure the root user for server_hostname domain
-  mysql_user: login_user=root login_password="{{ sqlRootPassword }}" user=root password="{{ sqlRootPassword }}" host="{{ ansible_fqdn }}"
-
-- name: Deletes anonymous server user
-  mysql_user: login_user=root login_password="{{ sqlRootPassword }}" user="" host_all=yes state=absent
-
-- name: Removes the test database
-  mysql_db: login_user=root login_password="{{ sqlRootPassword }}" db=test state=absent
+- name: Remove test database
+  mysql_db:
+    name: test
+    state: absent
 
 - name: Create database user with password and all database privileges and 'WITH GRANT OPTION'
   mysql_user:
     name: "{{ sqlUserAccount }}"
     password: "{{ sqlUserPassword }}"
-    login_user: root
-    login_password: "{{ sqlRootPassword }}"
     priv: 'medshakeehr.*:ALL,GRANT'
-    state: present    
+    state: present
 
-- name: Ensure MedShakeEHR database is present.
+- name: Ensure MedShakeEHR database is present
   mysql_db:
     name: "{{ sqlDbName }}"
-    login_user: "{{ sqlUserAccount }}"
-    login_password: "{{ sqlUserPassword }}"
     collation: utf8_general_ci
     encoding: utf8
     state: present
+
+- name: Custom mysql
+  template:
+    src: templates/custom.cnf.j2
+    dest: "/etc/mysql/mariadb.conf.d/custom.cnf"
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart Mariadb
