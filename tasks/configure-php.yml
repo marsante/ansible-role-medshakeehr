@@ -6,7 +6,7 @@
 - name: Setup php.ini configuration.
   template:
     src: templates/30-custom-php.ini.j2
-    dest: "/etc/php/{{ php_version.stdout }}/apache2/conf.d/10-custom-php.ini"
+    dest: "/etc/php/{{ php_version.stdout }}/apache2/conf.d/30-custom-php.ini"
     owner: root
     group: root
     mode: 0644

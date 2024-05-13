@@ -1,7 +1,7 @@
 ---
 - name: Creates SSL directory
   file:
-    path: "/etc/ssl/{{ domain }}"
+    path: "/etc/ssl/{{ msehr_domain }}"
     state: directory
     recurse: yes
     owner: root
@@ -10,27 +10,27 @@
 
 - name: create private key
   openssl_privatekey:
-    path: "/etc/ssl/{{ domain }}/{{ domain }}.key"
+    path: "/etc/ssl/{{ msehr_domain }}/{{ msehr_domain }}.key"
     size: 4096
     state: present
 
 - name: Generate an OpenSSL Certificate Signing Request with Subject information
   openssl_csr:
-    path: "/etc/ssl/{{ domain }}/{{ domain }}.csr"
-    privatekey_path: "/etc/ssl/{{ domain }}/{{ domain }}.key"
-    country_name: "{{ countryName }}"
-    locality_name: "{{ localityName }}"
-    organization_name: "{{ organizationName }}"
-    email_address: "{{ emailAdress }}"
-    common_name: "{{ domain }}"
-    subject_alt_name: 'DNS:"{{ domain }}"'
+    path: "/etc/ssl/{{ msehr_domain }}/{{ msehr_domain }}.csr"
+    privatekey_path: "/etc/ssl/{{ msehr_domain }}/{{ msehr_domain }}.key"
+    country_name: "{{ country_name }}"
+    locality_name: "{{ locality_name }}"
+    organization_name: "{{ organization_name }}"
+    email_address: "{{ email_address }}"
+    common_name: "{{ msehr_domain }}"
+    subject_alt_name: 'DNS:"{{ msehr_domain }}"'
     state: present
 
 - name: Generate a Self Signed OpenSSL certificate
   openssl_certificate:
-    path: "/etc/ssl/{{ domain }}/{{ domain }}.pem"
-    privatekey_path: "/etc/ssl/{{ domain }}/{{ domain }}.key"
-    csr_path: "/etc/ssl/{{ domain }}/{{ domain }}.csr"
+    path: "/etc/ssl/{{ msehr_domain }}/{{ msehr_domain }}.pem"
+    privatekey_path: "/etc/ssl/{{ msehr_domain }}/{{ msehr_domain }}.key"
+    csr_path: "/etc/ssl/{{ msehr_domain }}/{{ msehr_domain }}.csr"
     provider: selfsigned
     selfsigned_not_after: +3650d
     state: present

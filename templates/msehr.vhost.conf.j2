@@ -1,24 +1,24 @@
 {{ ansible_managed | comment }}
 <VirtualHost *:80>
-	ServerName {{ domain }}
+	ServerName {{ msehr_domain }}
 	ServerAlias msehr ehr medshakeehr MedShakeEHR
-	RedirectMatch     permanent ^(.*)$ https://{{ domain }}$1
+	RedirectMatch     permanent ^(.*)$ https://{{ msehr_domain }}$1
 
 </VirtualHost> 
 
 <VirtualHost *:443>
-	ServerName {{ domain }}
+	ServerName {{ msehr_domain }}
 	ServerAlias msehr ehr medshakeehr MedShakeEHR 
-	DocumentRoot "{{ msehrPath }}/public_html"
+	DocumentRoot "{{ msehr_dir }}/public_html"
 	RewriteEngine On
 	SSLEngine On
-    SSLCertificateFile /etc/ssl/{{ domain }}/{{ domain }}.pem
-    SSLCertificateKeyFile /etc/ssl/{{ domain }}/{{ domain }}.key
-	<Directory "{{ msehrPath }}/public_html">
+    SSLCertificateFile /etc/ssl/{{ msehr_domain }}/{{ msehr_domain }}.pem
+    SSLCertificateKeyFile /etc/ssl/{{ msehr_domain }}/{{ msehr_domain }}.key
+	<Directory "{{ msehr_dir }}/public_html">
 		Options FollowSymLinks
 		AllowOverride all
 		Require all granted
 	</Directory>
-	ErrorLog /var/log/apache2/error.{{ domain }}.log
-	CustomLog /var/log/apache2/access.{{ domain }}.log combined
+	ErrorLog /var/log/apache2/error.{{ msehr_domain }}.log
+	CustomLog /var/log/apache2/access.{{ msehr_domain }}.log combined
 </VirtualHost> 

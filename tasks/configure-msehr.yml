@@ -1,13 +1,13 @@
 ---
-- name:  check if config.yml exist
+- name:  Check if config.yml exist
   stat:
     path: /opt/ehr/config/config.yml
   register: ymlconfig 
   
 - name: Execute MedShakeEHR cli installation script
-  shell: "/usr/bin/php {{ msehrPath }}/public_html/install.php -s localhost -N -d {{ sqlDbName }} -u {{ sqlUserAccount }} -p \"{{ sqlUserPassword }}\" -r https -D {{ domain }} -o localhost"
+  shell: "/usr/bin/php {{ msehr_dir }}/public_html/install.php -s localhost -N -d {{ sql_database }} -u {{ sql_user }} -p \"{{ sql_user_password }}\" -r https -D {{ msehr_domain }} -o localhost"
   become: true
   become_user: www-data
   environment:
-    MEDSHAKEEHRPATH: "{{ msehrPath }}"
+    MEDSHAKEEHRPATH: "{{ msehr_dir }}"
   when: not ymlconfig.stat.exists

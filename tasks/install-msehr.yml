@@ -1,7 +1,7 @@
 ---
 - name:  check if MedShakeEHR exist
   stat:
-    path: "{{ msehrPath }}/public_html"
+    path: "{{ msehr_dir }}/public_html"
   register: msehr 
 
 - name: Get MedShakeEHR package
@@ -22,7 +22,7 @@
   copy:
     remote_src: yes
     src: "/tmp/MedShakeEHR-base-{{ msehr_base_release }}/"
-    dest: "{{ msehrPath }}"
+    dest: "{{ msehr_dir }}"
     mode: "u=rwX,go=rX"
     owner: www-data
     group: www-data
@@ -30,19 +30,19 @@
 
 - name: Creating MEDSHAKEEHRPATH file
   copy:
-    dest: "{{ msehrPath }}/public_html/MEDSHAKEEHRPATH"
+    dest: "{{ msehr_dir }}/public_html/MEDSHAKEEHRPATH"
     content: |
-      {{ msehrPath }}
+      {{ msehr_dir }}
     owner: www-data
     group: www-data
   when: not msehr.stat.exists 
 
 - name: Composer upgrade on /ehr
-  shell: cd "{{ msehrPath }}" && composer upgrade --no-cache   
+  shell: cd "{{ msehr_dir }}" && composer upgrade --no-cache   
   become: true
   become_user: www-data
 
 - name: Composer upgrade on /ehr/public_html
-  shell: cd "{{ msehrPath }}/public_html" && composer upgrade --no-cache   
+  shell: cd "{{ msehr_dir }}/public_html" && composer upgrade --no-cache   
   become: true
   become_user: www-data
