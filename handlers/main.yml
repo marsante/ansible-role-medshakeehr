@@ -3,3 +3,7 @@
   service:
     name: apache2
     state: restarted
+- name: Restart MariaDB
+  service: 
+    mariadb: name
+    state: restarted
