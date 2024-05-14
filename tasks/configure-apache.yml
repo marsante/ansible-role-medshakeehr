@@ -18,16 +18,16 @@
   notify: Restart Apache
 
 - name: deregister default vhosts
-  command: a2dissite "{{ item }}"
+  command: a2dissite {{item}}
   with_items:
     - 000-default.conf 
     - default-ssl.conf
   notify: Restart Apache
 
 - name: register default vhosts
-  command: a2ensite "{{ item }} "
+  command: a2ensite {{item}}
   with_items:
-    - "{{ msehr_domain }}.conf"
+    - "{{ msehr_domain }}"
   notify: Restart Apache
 
 - name: Set ServerTokens Prod
