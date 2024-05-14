@@ -27,7 +27,7 @@
 - name: register default vhosts
   command: a2ensite "{{ item }} "
   with_items:
-    - "{{ msehr_domain }}"
+    - "{{ msehr_domain }}.conf"
   notify: Restart Apache
 
 - name: Set ServerTokens Prod
