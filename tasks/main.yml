@@ -7,7 +7,7 @@
 
 - name: Install packages
   apt:
-    name: "{{ msehr-packages }}"
+    name: "{{ msehr_packages }}"
     update_cache: true
     state: latest
 
