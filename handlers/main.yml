@@ -5,5 +5,5 @@
     state: restarted
 - name: Restart MariaDB
   service: 
-    mariadb: name
+    name: mariadb
     state: restarted

@@ -1,5 +1,7 @@
 ---
 galaxy_info:
+    role_name: medshakeehr
+    namespace: marsante
     author: "Michaël Val contrib Indelog"
     description: 'This Ansible role install the latest version of MedShakeEHR'
     license: GPL-3.0-only

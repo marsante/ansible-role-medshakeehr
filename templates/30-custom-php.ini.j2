@@ -1,8 +1,8 @@
 {{ ansible_managed | comment }}
 [PHP]
-{{ max_input_vars }}
-{{ error_reporting }}
-{{ display_errors }}
-{{ display_startup_errors }}
-{{ post_maxsize }}
-{{ upload_max_filesize }}
+max_input_vars = {{ max_input_vars | default(20000) }}
+error_reporting = {{ error_reporting | default('E_ALL & ~E_DEPRECATED & ~E_STRICT') }}
+display_errors = {{ display_errors | default('Off') }}
+display_startup_errors = {{ display_startup_errors | default('Off') }}
+post_max_size = {{ post_maxsize | default('20M') }}
+upload_max_filesize = {{ upload_max_filesize | default('20M') }}
