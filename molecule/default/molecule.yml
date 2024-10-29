@@ -1,0 +1,17 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: default
+platforms:
+  - name: medshakeehr-role
+    image: debian12_cloudinit
+    memory: 512
+    cpus: 1
+provisioner:
+  name: ansible
+verifier: 
+  name: ansible
+    # you might want to add your own variables here based on what provisioning
+    # you are doing like:
+    # image: quay.io/centos/centos:stream8
