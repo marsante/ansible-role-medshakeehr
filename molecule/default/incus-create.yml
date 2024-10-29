@@ -10,9 +10,9 @@
   - name: Provision instance {{ platform.name }}
     ansible.builtin.shell:
       cmd: "incus launch {{ platform.image }} {{ platform.name }} --config limits.cpu={{ platform.cpus }} --config limits.memory={{ platform.memory }}MiB --profile default --profile molecule"
-  - name: Pause 5s
+  - name: Pause 15s
     ansible.builtin.pause:
-      seconds: 5
+      seconds: 15
   when: instance | length == 0
 - name: Test if VM already Exist
   ansible.builtin.shell:
