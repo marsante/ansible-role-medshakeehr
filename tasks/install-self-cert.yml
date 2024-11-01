@@ -1,12 +1,19 @@
 ---
-- name: Creates SSL directory
-  file:
-    path: "/etc/ssl/{{ msehr_domain }}"
-    state: directory
-    recurse: yes
-    owner: root
-    group: root
-    mode: '0755'
+- block:
+  - name: Check if SSL folder exists
+    stat:
+      path: "/etc/ssl/{{ msehr_domain }}"
+    register: ssl_folder_stats
+
+  - name: Create SSL directory
+    file:
+      path: "/etc/ssl/{{ msehr_domain }}"
+      state: directory
+      recurse: yes
+      owner: root
+      group: root
+      mode: '0755'
+    when: not ssl_folder_stats.stat.exists
 
 - name: create private key
   openssl_privatekey:

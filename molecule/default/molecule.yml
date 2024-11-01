@@ -14,6 +14,11 @@ platforms:
     memory: 512
     cpus: 1
 
+  - name: msehr-role-jammy
+    image: images:ubuntu/jammy/cloud
+    memory: 1024
+    cpus: 1
+
   - name: msehr-role-noble
     image: images:ubuntu/noble/cloud
     memory: 1024
@@ -25,3 +30,7 @@ verifier:
     # you might want to add your own variables here based on what provisioning
     # you are doing like:
     # image: quay.io/centos/centos:stream8
+lint: |
+  set -e
+  yamllint .
+  ansible-lint .

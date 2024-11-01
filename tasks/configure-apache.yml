@@ -18,16 +18,21 @@
   notify: Restart Apache
 
 - name: deregister default vhosts
-  command: a2dissite {{item}}
+  file:
+    path: "/etc/apache2/sites-enabled/{{ item }}"
+    state: absent
   with_items:
-    - 000-default.conf 
-    - default-ssl.conf
+    - "000-default.conf"
+    - "default-ssl.conf"
   notify: Restart Apache
 
-- name: register default vhosts
-  command: a2ensite {{item}}
+- name: register msehr vhosts
+  file:
+    src: "/etc/apache2/sites-available/{{ msehr_domain }}.conf"
+    dest: "/etc/apache2/sites-enabled/{{ item }}"
+    state: link
   with_items:
-    - "{{ msehr_domain }}"
+  - "{{ msehr_domain }}.conf"
   notify: Restart Apache
 
 - name: Set ServerTokens Prod

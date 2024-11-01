@@ -37,12 +37,18 @@
     group: www-data
   when: not msehr.stat.exists 
 
-- name: Composer upgrade on /ehr
-  shell: cd "{{ msehr_dir }}" && composer upgrade --no-cache   
+- name: Composer update on /ehr
+  community.general.composer:
+    command: update
+    arguments: --no-cache
+    working_dir: "{{ msehr_dir }}"
   become: true
   become_user: www-data
 
 - name: Composer upgrade on /ehr/public_html
-  shell: cd "{{ msehr_dir }}/public_html" && composer upgrade --no-cache   
+  community.general.composer:
+    command: update
+    arguments: --no-cache
+    working_dir: "{{ msehr_dir }}/public_html"
   become: true
   become_user: www-data

@@ -1,2 +1,3 @@
 ---
 apache_ufw_ports: WWW Full
+php_default_version_debian: "8.2"
