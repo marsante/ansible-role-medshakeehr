@@ -29,7 +29,7 @@
   mysql_user:
     name: "{{ sql_user }}"
     password: "{{ sql_user_password }}"
-    priv: 'medshakeehr.*:ALL,GRANT'
+    priv: '"{{ sql_database }}".*:ALL,GRANT'
     state: present
 
 - name: Ensure MedShakeEHR database is present

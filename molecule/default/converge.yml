@@ -6,4 +6,4 @@
   tasks:
     - name: "Include MedShakeEHR Role"
       ansible.builtin.include_role:
-        name: ansible-role-medshakeehr
+        name: marsante.medshakeehr
