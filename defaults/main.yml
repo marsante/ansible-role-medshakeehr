@@ -7,16 +7,16 @@ sql_root_password: root
 sql_user: user
 sql_user_password: user
 sql_database: medshakeehr
-msehr_base_release: "8.1.4"
+msehr_base_release: "8.2.0"
 msehr_base_repo_url: "https://codeload.github.com/MedShake/MedShakeEHR-base/tar.gz/refs/tags/"
-msehr_base_checksum: "sha256:75963686c8d7d2f7322620e7f57ceb409acec09fa81fbf8ff20f0cf47d8d7b33"
+msehr_base_checksum: "sha256:7af50648c69d53cc5981544ae39e54eaeff03fe68f09789d1772e36e1d0e2e84"
 msehr_dir: /var/www/ehr
 timezone: Europe/Paris
 msehr_domain: msehr.local
 upload_max_filesize: 20M
 post_maxsize: 20M
-max_input_vars: 20000
+max_input_vars: 10000
 error_reporting: 'E_ALL & ~E_DEPRECATED & ~E_STRICT'
 display_errors: 'Off'
 display_startup_errors: 'Off'
-msehr_packages: ['acl', 'apache2', 'composer', 'curl', 'ghostscript', 'git', 'grub2', 'imagemagick', 'mariadb-server', 'ntp', 'pdftk-java', 'php', 'php-bcmath', 'php-curl', 'php-gd', 'php-gnupg', 'php-imagick', 'php-imap', 'php-intl', 'php-json', 'php-mysql', 'php-soap', 'php-xml', 'php-yaml', 'php-zip', 'python3-mysqldb', 'python3-openssl', 'ufw', 'unattended-upgrades' ]
+msehr_packages: ['acl', 'apache2', 'composer', 'curl', 'ghostscript', 'git', 'grub2', 'imagemagick', 'mariadb-server', 'ntpsec', 'pdftk-java', 'php', 'php-bcmath', 'php-curl', 'php-gd', 'php-gnupg', 'php-imagick', 'php-intl', 'php-json', 'php-mysql', 'php-soap', 'php-xml', 'php-yaml', 'php-zip', 'python3-mysqldb', 'python3-openssl', 'ufw', 'unattended-upgrades' ]
