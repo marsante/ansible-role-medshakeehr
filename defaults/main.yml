@@ -7,7 +7,7 @@ sql_root_password: root
 sql_user: user
 sql_user_password: user
 sql_database: medshakeehr
-msehr_base_release: "8.2.0"
+msehr_base_release: "8.2.1"
 msehr_base_repo_url: "https://codeload.github.com/MedShake/MedShakeEHR-base/tar.gz/refs/tags/"
 msehr_base_checksum: "sha256:7af50648c69d53cc5981544ae39e54eaeff03fe68f09789d1772e36e1d0e2e84"
 msehr_dir: /var/www/ehr
