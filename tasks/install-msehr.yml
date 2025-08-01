@@ -28,15 +28,6 @@
     group: www-data
   when: not msehr.stat.exists 
 
-- name: Creating MEDSHAKEEHRPATH file
-  copy:
-    dest: "{{ msehr_dir }}/public_html/MEDSHAKEEHRPATH"
-    content: |
-      {{ msehr_dir }}
-    owner: www-data
-    group: www-data
-  when: not msehr.stat.exists 
-
 - name: Composer update on /ehr
   community.general.composer:
     command: update
