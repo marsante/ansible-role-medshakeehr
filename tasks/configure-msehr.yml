@@ -6,7 +6,7 @@
     register: ymlconfig 
     
   - name: Execute MedShakeEHR cli installation script
-    shell: "/usr/bin/php {{ msehr_dir }}/public_html/install.php -s localhost -N -d {{ sql_database }} -u {{ sql_user }} -p \"{{ sql_user_password }}\" -r https -D {{ msehr_domain }} -o localhost"
+    shell: "export MEDSHAKEEHRPATH={{ msehr_dir }}; /usr/bin/php {{ msehr_dir }}/public_html/install.php -s localhost -N -d {{ sql_database }} -u {{ sql_user }} -p \"{{ sql_user_password }}\" -r https -D {{ msehr_domain }} -o localhost"
     become: true
     become_user: www-data
     environment:
