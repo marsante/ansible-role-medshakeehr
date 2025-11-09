@@ -1,13 +1,12 @@
 MedShakeEHR Role
 =========
 
-Le rôle ansible qui permet d’installer MedShakeEHR
+Le rôle ansible qui permet d’installer MedShakeEHR. [Documentation](https://docs.brunoy-osteopathe.fr/medshakeehr/guides/installation/ansible/).
 
 Requirements
 ------------
 
 - ansible 2.9
-
 
 Role Variables
 --------------
