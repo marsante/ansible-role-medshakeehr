@@ -1,10 +1,10 @@
 ---
-- name:  check if MedShakeEHR exist
+- name: "check if {{ msehr_dir }} exist"
   stat:
     path: "{{ msehr_dir }}/public_html"
   register: msehr 
 
-- name: Get MedShakeEHR package
+- name: "Get MedShakeEHR package v{{ msehr_base_release }}"
   get_url:
     url: "{{ msehr_base_repo_url }}v{{ msehr_base_release }}"
     dest: "/tmp/msehr.tar.gz"
@@ -28,18 +28,20 @@
     group: www-data
   when: not msehr.stat.exists 
 
-- name: Composer update on /ehr
+- name: "Composer update on {{ msehr_dir }}"
   community.general.composer:
     command: update
     arguments: --no-cache
     working_dir: "{{ msehr_dir }}"
   become: true
   become_user: www-data
+  tags: update
 
-- name: Composer upgrade on /ehr/public_html
+- name: "Composer upgrade on {{ msehr_dir }}/public_html"
   community.general.composer:
     command: update
     arguments: --no-cache
     working_dir: "{{ msehr_dir }}/public_html"
   become: true
   become_user: www-data
+  tags: update

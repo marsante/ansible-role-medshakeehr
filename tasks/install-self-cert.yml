@@ -1,11 +1,11 @@
 ---
 - block:
-  - name: Check if SSL folder exists
+  - name: "Check if SSL {{ msehr_domain }} folder exists"
     stat:
       path: "/etc/ssl/{{ msehr_domain }}"
     register: ssl_folder_stats
 
-  - name: Create SSL directory
+  - name: "Create SSL {{ msehr_domain }} directory"
     file:
       path: "/etc/ssl/{{ msehr_domain }}"
       state: directory
@@ -15,13 +15,13 @@
       mode: '0755'
     when: not ssl_folder_stats.stat.exists
 
-- name: create private key
+- name: "create {{ msehr_domain }} private key"
   openssl_privatekey:
     path: "/etc/ssl/{{ msehr_domain }}/{{ msehr_domain }}.key"
     size: 4096
     state: present
 
-- name: Generate an OpenSSL Certificate Signing Request with Subject information
+- name: Generate an OpenSSL Certificate Signing Request with Subject information for {{ msehr_domain }}
   openssl_csr:
     path: "/etc/ssl/{{ msehr_domain }}/{{ msehr_domain }}.csr"
     privatekey_path: "/etc/ssl/{{ msehr_domain }}/{{ msehr_domain }}.key"
@@ -33,7 +33,7 @@
     subject_alt_name: 'DNS:"{{ msehr_domain }}"'
     state: present
 
-- name: Generate a Self Signed OpenSSL certificate
+- name: "Generate a Self Signed OpenSSL certificate for {{ msehr_domain }}"
   openssl_certificate:
     path: "/etc/ssl/{{ msehr_domain }}/{{ msehr_domain }}.pem"
     privatekey_path: "/etc/ssl/{{ msehr_domain }}/{{ msehr_domain }}.key"

@@ -1,12 +1,12 @@
 ---
 - name: Include OS-specific variables.
-  include_vars: "{{ ansible_distribution }}.yml"
+  include_vars: "{{ ansible_facts['distribution'] }}.yml"
 
 - name: Include distribution and version-specific vars.
   include_vars: "{{ item }}"
   with_first_found:
     - files:
-        - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+        - "{{ ansible_facts['distribution'] }}-{{ ansible_facts['distribution_major_version'] }}.yml"
       skip: true
   
 - name: gather package facts
@@ -23,18 +23,21 @@
 
 - name: Install MedShakeEHR
   ansible.builtin.include_tasks: install-msehr.yml
+  tags: minimal
 
 - name: Configure MariaDB
   ansible.builtin.include_tasks: configure-mariadb.yml
 
 - name: Install self certificate
   ansible.builtin.include_tasks: install-self-cert.yml
+  tags: minimal
 
 - name: Configure Apache
   ansible.builtin.include_tasks: configure-apache.yml
 
 - name: Configure MedShakeEHR
   ansible.builtin.include_tasks: configure-msehr.yml
+  tags: minimal
 
 - name: Configure timezone
   timezone:

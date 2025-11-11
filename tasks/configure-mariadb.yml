@@ -17,22 +17,26 @@
 
 - name: Remove anonymous user
   mysql_user:
+    login_user: root
+    login_password: "{{ sql_root_password }}"
     name: ''
     state: absent
 
 - name: Remove test database
   mysql_db:
+    login_user: root
+    login_password: "{{ sql_root_password }}"
     name: test
     state: absent
 
-- name: Create database user with password and all database privileges and 'WITH GRANT OPTION'
+- name: "Create {{ sql_user }} user with password and all {{ sql_database }} database privileges and 'WITH GRANT OPTION'"
   mysql_user:
     name: "{{ sql_user }}"
     password: "{{ sql_user_password }}"
     priv: "{{ sql_database }}.*:ALL,GRANT"
     state: present
 
-- name: Ensure MedShakeEHR database is present
+- name: "Ensure {{ sql_database }} database is present"
   mysql_db:
     name: "{{ sql_database }}"
     collation: utf8_general_ci

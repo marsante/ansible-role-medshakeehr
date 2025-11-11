@@ -1,14 +1,9 @@
 ---
-- block:
-  - name:  Check if config.yml exist
-    stat:
-      path: "{{ msehr_dir }}/config/config.yml"
-    register: ymlconfig 
-    
-  - name: Execute MedShakeEHR cli installation script
-    shell: "export MEDSHAKEEHRPATH={{ msehr_dir }}; /usr/bin/php {{ msehr_dir }}/public_html/install.php -s localhost -N -d {{ sql_database }} -u {{ sql_user }} -p \"{{ sql_user_password }}\" -r https -D {{ msehr_domain }} -o localhost"
-    become: true
-    become_user: www-data
-    environment:
-      MEDSHAKEEHRPATH: "{{ msehr_dir }}"
-    when: not ymlconfig.stat.exists
+- name: Execute MedShakeEHR cli installation script
+  shell: "export MEDSHAKEEHRPATH={{ msehr_dir }}; /usr/bin/php {{ msehr_dir }}/public_html/install.php -s localhost -N -d {{ sql_database }} -u {{ sql_user }} -p \"{{ sql_user_password }}\" -r https -D {{ msehr_domain }} -o localhost"
+  become: true
+  become_user: www-data
+  environment:
+    MEDSHAKEEHRPATH: "{{ msehr_dir }}"
+  args:
+    creates: "{{ msehr_dir }}/config/config.yml"

@@ -1,5 +1,5 @@
 ---
-- name: Setup vhosts configuration.
+- name: "Setup {{ msehr_domain }}."
   template:
     src: templates/msehr.vhost.conf.j2
     dest: "/etc/apache2/sites-available/{{ msehr_domain }}.conf"
@@ -26,7 +26,7 @@
     - "default-ssl.conf"
   notify: Restart Apache
 
-- name: register msehr vhosts
+- name: register {{ msehr_domain }} vhosts
   file:
     src: "/etc/apache2/sites-available/{{ msehr_domain }}.conf"
     dest: "/etc/apache2/sites-enabled/{{ item }}"
